@@ -4,7 +4,7 @@ import 'package:shop_debts/config/const/app_constants.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/features/common/presentation/atoms/app_icon_button.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/creditors_search_bar.dart';
-import 'package:shop_debts/features/creditors/presentation/organisms/add_new_creditor_dialog.dart';
+import 'package:shop_debts/features/creditors/presentation/molecules/creditor_form_dialog.dart';
 import 'package:shop_debts/features/creditors/presentation/pages/invoices.page.dart';
 
 import '../organisms/creditors_list.dart';
@@ -37,7 +37,7 @@ class RecordsPage extends StatelessWidget {
                   AppIconButton(
                     onTap: () => showDialog(
                       context: context,
-                      builder: (context) => const AddNewCreditorDialog(),
+                      builder: (context) => const CreditorFormDialog(),
                     ),
                     icon: Icons.person_add,
                   ),

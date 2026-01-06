@@ -19,15 +19,16 @@ class CustomersTransactionsOptions extends ConsumerWidget {
       child: Row(
         spacing: 16,
         children: [
-          AppIconButton(
-            icon: Icons.add,
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => const Dialog.fullscreen(
-                child: AddCustomerTransactionPage(transactionType: .debt),
+          if (customerId == null)
+            AppIconButton(
+              icon: Icons.add,
+              onTap: () => showDialog(
+                context: context,
+                builder: (context) => const Dialog.fullscreen(
+                  child: AddCustomerTransactionPage(transactionType: .debt),
+                ),
               ),
             ),
-          ),
           AppIconButton(
             icon: Icons.filter_alt_outlined,
             onTap: () {

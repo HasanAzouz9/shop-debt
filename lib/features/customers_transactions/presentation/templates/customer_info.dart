@@ -4,7 +4,7 @@ import '../../../../config/const/app_constants.dart';
 import '../../../../core/extensions/context.extensions.dart';
 import '../organisms/customer_contact_card.dart';
 import '../organisms/customer_notes_list.dart';
-import 'customer_note_text_field.dart';
+import '../molecules/customer_note_text_field.dart';
 
 class CustomerInfo extends StatelessWidget {
   const CustomerInfo({super.key});

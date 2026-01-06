@@ -21,6 +21,7 @@ class CustomerTransactionsList extends ConsumerWidget {
           padding: context.padding16,
           child: Text('قائمة المعاملات', style: context.textTheme.titleMedium),
         ),
+
         CustomersTransactionsOptions(customerId: customerId),
         Expanded(child: CustomersTransactionsList(customerId: customerId)),
       ],

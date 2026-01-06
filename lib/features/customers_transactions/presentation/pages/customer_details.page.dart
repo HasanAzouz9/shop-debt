@@ -4,12 +4,12 @@ import 'package:shop_debts/core/enum/customer_details.enum.dart';
 import 'package:shop_debts/features/customers_transactions/domain/models/customer.entity.dart';
 
 import '../../application/customer_provider.dart';
-import '../molecules/customer_info.dart';
-import '../organisms/customer_details_add_transaction.dart';
+import '../templates/customer_info.dart';
+import '../templates/customer_details_add_transaction.dart';
 import '../organisms/customer_details_page_app_bar.dart';
 import '../organisms/customer_details_page_error_app_bar.dart';
 import '../organisms/customer_details_page_loading_app_bar.dart';
-import '../organisms/customer_transactions_list.dart';
+import '../templates/customer_transactions_list.dart';
 
 class CustomerDetailsPage extends ConsumerStatefulWidget {
   final CustomerEntity customer;

@@ -10,8 +10,7 @@ import 'package:shop_debts/features/customers_transactions/domain/models/custome
 import 'package:uuid/uuid.dart';
 
 import '../../application/customer_form_state.controller.dart';
-
-//TODO add note text field
+import '../../application/customer_provider.dart';
 
 class CustomerFormDialog extends ConsumerStatefulWidget {
   final CustomerEntity? existingCustomer;
@@ -25,7 +24,6 @@ class CustomerFormDialog extends ConsumerStatefulWidget {
 class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with FormValidationMixin {
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
-  late TextEditingController _note;
   final _formKey = GlobalKey<FormState>();
 
   bool get isEdit => widget.existingCustomer != null;
@@ -35,14 +33,12 @@ class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with Fo
     super.initState();
     _nameController = TextEditingController(text: widget.existingCustomer?.name);
     _phoneController = TextEditingController(text: widget.existingCustomer?.phoneNumber);
-    _note = TextEditingController(text: widget.existingCustomer?.notes.join(', '));
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
-    _note.dispose();
     super.dispose();
   }
 
@@ -61,6 +57,9 @@ class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with Fo
               message: isEdit ? 'تم التعديل بنجاح' : 'تمت الإضافة بنجاح',
               type: .success,
             );
+            if (widget.existingCustomer != null) {
+              ref.invalidate(customerProvider(widget.existingCustomer!.getId));
+            }
             ref.read(CustomerController.provider.notifier).loadFirstPage();
             context.pop();
           },
@@ -69,10 +68,11 @@ class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with Fo
     );
 
     return AlertDialog(
-      title: Text(isEdit ? AppConstants.editNameLabel : AppConstants.newCustomerLabel),
+      title: Text(isEdit ? 'تعديل الزبون' : AppConstants.newCustomerLabel),
       content: Form(
         key: _formKey,
         child: Column(
+          spacing: 16,
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
@@ -85,7 +85,6 @@ class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with Fo
                 return validateEmptyField(value);
               },
             ),
-            const SizedBox(height: 16),
             TextFormField(
               controller: _phoneController,
               decoration: const InputDecoration(labelText: AppConstants.phoneNumberLabel),
@@ -105,7 +104,6 @@ class _CustomerFormDialogState extends ConsumerState<CustomerFormDialog> with Fo
                       id: isEdit ? widget.existingCustomer!.getId : const Uuid().v4(),
                       name: _nameController.text.trim(),
                       phoneNumber: _phoneController.text.trim(),
-                      notes: _note.text.isEmpty ? [] : [_note.text.trim()],
                       currentBalance: widget.existingCustomer?.currentBalance ?? 0.0,
                     );
                     notifier.submit(customer: customer, isEdit: isEdit);

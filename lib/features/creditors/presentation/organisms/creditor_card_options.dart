@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/extensions/context.extensions.dart';
 import 'package:shop_debts/features/common/application/phone.controller.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/add_creditor_payment_dialog.dart';
-import 'package:shop_debts/features/creditors/presentation/organisms/edit_creditor_dialog.dart';
+import 'package:shop_debts/features/creditors/presentation/molecules/creditor_form_dialog.dart';
 
 import '../../../common/presentation/atoms/app_icon_button.dart';
 import 'creditors_list.dart';
@@ -37,7 +37,7 @@ class CreditorCardOptions extends ConsumerWidget {
         AppIconButton(
           onTap: () => showDialog(
             context: context,
-            builder: (context) => const EditCreditorDialog(),
+            builder: (context) => CreditorFormDialog(existingCreditor: creditor),
           ),
           icon: Icons.edit,
         ),
