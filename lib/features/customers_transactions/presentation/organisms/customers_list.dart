@@ -6,7 +6,7 @@ import 'package:shop_debts/features/common/presentation/molecules/exception_card
 import 'package:shop_debts/features/customers_transactions/application/customer.controller.dart';
 import 'package:shop_debts/features/customers_transactions/domain/models/customer.entity.dart';
 
-import '../molecules/customers_list_card.dart';
+import 'customers_list_card.dart';
 
 class CustomersList extends ConsumerStatefulWidget {
   const CustomersList({super.key});

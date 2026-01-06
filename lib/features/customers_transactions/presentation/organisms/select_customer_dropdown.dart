@@ -72,11 +72,14 @@ class _SelectCustomerDropdownState extends ConsumerState<SelectCustomerDropdown>
                 color: context.colorScheme.secondaryContainer,
                 borderRadius: context.radius8,
               ),
-              child: Column(
-                children: [
-                  const SelectCustomerDropdownSearchBar(),
-                  SelectCustomerDropdownCustomersList(onCustomerSelected: _handleCustomerSelection),
-                ],
+              child: Padding(
+                padding: context.padding8,
+                child: Column(
+                  children: [
+                    const SelectCustomerDropdownSearchBar(),
+                    SelectCustomerDropdownCustomersList(onCustomerSelected: _handleCustomerSelection),
+                  ],
+                ),
               ),
             ),
           ),

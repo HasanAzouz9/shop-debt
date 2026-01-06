@@ -38,7 +38,7 @@ class _CustomersSearchBarState extends ConsumerState<CustomersSearchBar> {
     return SearchBar(
       elevation: const WidgetStatePropertyAll(0),
       controller: _controller,
-      constraints: BoxConstraints.tight(const Size.fromHeight(45)),
+      constraints: BoxConstraints.tight(const Size.fromHeight(50)),
       shape: const WidgetStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),

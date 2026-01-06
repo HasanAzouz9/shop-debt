@@ -13,15 +13,19 @@ class CreditorsSearchBar extends ConsumerStatefulWidget {
 
 class _CreditorsSearchBarState extends ConsumerState<CreditorsSearchBar> {
   late FocusNode _searchFocus;
+  late TextEditingController _controller;
+
   final DeBouncer _deBouncer = DeBouncer();
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController();
     _searchFocus = FocusNode();
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     _searchFocus.dispose();
     _deBouncer.dispose();
     super.dispose();
@@ -30,10 +34,12 @@ class _CreditorsSearchBarState extends ConsumerState<CreditorsSearchBar> {
   @override
   Widget build(BuildContext context) {
     final creditorController = ref.read(GetAllCreditorsController.provider.notifier);
-    return TextField(
+    return SearchBar(
+      controller: _controller,
       focusNode: _searchFocus,
+      hintText: AppConstants.searchCreditorsLabel,
+      leading: const Icon(Icons.search),
       onTapOutside: (event) => _searchFocus.unfocus(),
-      decoration: const InputDecoration(hint: Text(AppConstants.searchCreditorsLabel), suffixIcon: Icon(Icons.search)),
       onChanged: (value) => _deBouncer.run(() => creditorController.getAll(name: value)),
     );
   }

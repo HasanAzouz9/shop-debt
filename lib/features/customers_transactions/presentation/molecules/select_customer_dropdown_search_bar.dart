@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/core/helpers/de_bouncer.dart';
 
 import '../../../../config/const/app_constants.dart';
@@ -23,6 +22,7 @@ class _CustomerSearchOverlayContentState extends ConsumerState<SelectCustomerDro
     super.initState();
     _searchController = TextEditingController();
     _searchFocus = FocusNode();
+    _searchFocus.requestFocus();
   }
 
   @override
@@ -36,18 +36,12 @@ class _CustomerSearchOverlayContentState extends ConsumerState<SelectCustomerDro
   @override
   Widget build(BuildContext context) {
     final customerController = ref.read(CustomerController.provider.notifier);
-    return Padding(
-      padding: context.padding8,
-      child: TextField(
-        controller: _searchController,
-        focusNode: _searchFocus,
-        autofocus: true,
-        decoration: const InputDecoration().copyWith(
-          hintText: AppConstants.searchCustomerLabel,
-          prefixIcon: const Icon(Icons.search),
-        ),
-        onChanged: (value) => _deBouncer.run(() => customerController.setFilterAndLoad(name: value)),
-      ),
+    return SearchBar(
+      controller: _searchController,
+      focusNode: _searchFocus,
+      hintText: AppConstants.searchCustomerLabel,
+      leading: const Icon(Icons.search),
+      onChanged: (value) => _deBouncer.run(() => customerController.setFilterAndLoad(name: value)),
     );
   }
 }

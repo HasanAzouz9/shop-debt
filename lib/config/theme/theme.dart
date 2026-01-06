@@ -359,6 +359,15 @@ class MaterialTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)),
       constraints: BoxConstraints.fromViewConstraints(const ViewConstraints(minWidth: double.infinity)),
     ),
+    searchBarTheme: const SearchBarThemeData().copyWith(
+      elevation: const WidgetStatePropertyAll(0),
+      constraints: BoxConstraints.tight(const Size.fromHeight(50)),
+      shape: const WidgetStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(backgroundColor: Colors.transparent),
     bottomSheetTheme: const BottomSheetThemeData().copyWith(shape: const BeveledRectangleBorder()),
     inputDecorationTheme: const InputDecorationTheme().copyWith(
