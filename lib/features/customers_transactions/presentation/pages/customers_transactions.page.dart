@@ -7,16 +7,17 @@ import '../../../../config/const/app_constants.dart';
 
 class CustomersTransactionsPage extends StatelessWidget {
   const CustomersTransactionsPage({super.key});
-
+  static const routeName = 'customers_transactions_page';
+  static const routePath = '/';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppConstants.transactionsLabel),
         centerTitle: true,
-        // forceMaterialTransparency: true,
+        forceMaterialTransparency: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(4.h),
+          preferredSize: Size.fromHeight(5.h),
           child: const CustomersTransactionsOptions(),
         ),
       ),

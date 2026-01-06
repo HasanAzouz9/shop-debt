@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
-import 'package:shop_debts/core/extensions/context.extensions.dart';
 import 'package:shop_debts/features/customers_transactions/application/get_all_transaction.controller.dart';
+import 'package:shop_debts/features/customers_transactions/presentation/pages/add_customer_transaction.page.dart';
 
 import '../../../common/presentation/atoms/app_icon_button.dart';
 import 'customer_transactions_filter_dialog.dart';
@@ -15,13 +15,21 @@ class CustomersTransactionsOptions extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final transactionController = ref.read(GetAllTransactionsController.provider(customerId).notifier);
     return Padding(
-      padding: context.paddingHorizontal16,
+      padding: context.paddingH16V8,
       child: Row(
         spacing: 16,
         children: [
           AppIconButton(
+            icon: Icons.add,
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => const Dialog.fullscreen(
+                child: AddCustomerTransactionPage(transactionType: .debt),
+              ),
+            ),
+          ),
+          AppIconButton(
             icon: Icons.filter_alt_outlined,
-            iconColor: context.colorScheme.primary,
             onTap: () {
               showDialog(
                 context: context,
@@ -33,7 +41,6 @@ class CustomersTransactionsOptions extends ConsumerWidget {
           ),
           AppIconButton(
             icon: Icons.restart_alt_sharp,
-            iconColor: context.colorScheme.primary,
             onTap: () => transactionController.resetFilter(),
           ),
         ],

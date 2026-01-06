@@ -21,28 +21,31 @@ class CustomersPage extends StatelessWidget {
           centerTitle: true,
           forceMaterialTransparency: true,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(6.h),
-            child: Padding(
-              padding: context.paddingHorizontal16,
-              child: Row(
-                spacing: 16,
-                children: [
-                  AppIconButton(
-                    icon: Icons.add,
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => const CustomerFormDialog(),
-                    ),
+            preferredSize: Size.fromHeight(4.h),
+            child: Align(
+              alignment: .centerRight,
+              child: Padding(
+                padding: context.paddingHorizontal16,
+                child: AppIconButton(
+                  icon: Icons.add,
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => const CustomerFormDialog(),
                   ),
-                  const Expanded(child: CustomersSearchBar()),
-                ],
+                ),
               ),
             ),
           ),
         ),
         body: Padding(
           padding: context.padding16,
-          child: const CustomersList(),
+          child: const Column(
+            spacing: 16,
+            children: [
+              CustomersSearchBar(),
+              Expanded(child: CustomersList()),
+            ],
+          ),
         ),
         resizeToAvoidBottomInset: false,
       ),

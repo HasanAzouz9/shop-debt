@@ -20,7 +20,7 @@ class InvoiceCard extends ConsumerWidget {
         builder: (context) => InvoiceDetailsDialog(invoice: invoice),
       ),
       child: Card(
-        margin: context.padding16,
+        margin: context.paddingBottom16,
         child: Padding(
           padding: context.padding8,
           child: DefaultTextStyle(

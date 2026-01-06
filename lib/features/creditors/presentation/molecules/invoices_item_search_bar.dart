@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/config/const/app_constants.dart';
-import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/features/common/presentation/atoms/app_icon_button.dart';
 import 'package:shop_debts/features/creditors/application/get_all_invoices.controller.dart';
 
@@ -33,31 +32,28 @@ class _InvoicesItemSearchBarState extends ConsumerState<InvoicesItemSearchBar> {
   @override
   Widget build(BuildContext context) {
     final invoiceController = ref.read(GetAllInvoicesController.provider.notifier);
-    return Padding(
-      padding: context.padding16,
-      child: TextFormField(
-        controller: _searchController,
-        focusNode: _searchFocus,
-        decoration: const InputDecoration().copyWith(
-          hintText: AppConstants.searchItemsLabel,
-          prefixIcon: AppIconButton(
-            icon: Icons.search,
-            onTap: () {
-              if (_searchController.text.isNotEmpty) {
-                invoiceController.setItemSearchQuery(query: _searchController.text);
-              }
-            },
-          ),
-          suffixIcon: AppIconButton(
-            icon: Icons.clear,
-            onTap: () {
-              _searchController.clear();
-              _searchFocus.unfocus();
-              invoiceController.loadFirstPage();
-            },
-          ),
-        ),
+    return SearchBar(
+      controller: _searchController,
+      focusNode: _searchFocus,
+      hintText: AppConstants.searchItemsLabel,
+      leading: AppIconButton(
+        icon: Icons.search,
+        onTap: () {
+          if (_searchController.text.isNotEmpty) {
+            invoiceController.setItemSearchQuery(query: _searchController.text);
+          }
+        },
       ),
+      trailing: [
+        AppIconButton(
+          icon: Icons.clear,
+          onTap: () {
+            _searchController.clear();
+            _searchFocus.unfocus();
+            invoiceController.resetSearchQuery();
+          },
+        ),
+      ],
     );
   }
 }

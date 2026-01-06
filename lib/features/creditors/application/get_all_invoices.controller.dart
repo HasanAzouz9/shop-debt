@@ -22,6 +22,11 @@ class GetAllInvoicesController extends StateNotifier<PaginationState<InvoiceEnti
     loadFirstPage();
   }
 
+  resetSearchQuery() {
+    _itemSearchQuery = null;
+    loadFirstPage();
+  }
+
   loadFirstPage() async {
     state = const PaginationState.initial();
     final result = await interface.getAll(itemName: _itemSearchQuery);

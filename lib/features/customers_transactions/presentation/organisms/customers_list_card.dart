@@ -15,16 +15,16 @@ class CustomersListCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final customer = ref.watch(CustomersList.customerProvider);
 
-    return InkWell(
-      onTap: () => context.pushNamed(CustomerDetailsPage.routeName, extra: customer),
-      child: Card(
-        margin: context.paddingBottom16,
-        child: Padding(
-          padding: context.padding8,
-          child: Column(
-            spacing: 8,
-            children: [
-              Row(
+    return Card(
+      margin: context.paddingBottom16,
+      child: Padding(
+        padding: context.padding8,
+        child: Column(
+          spacing: 8,
+          children: [
+            InkWell(
+              onTap: () => context.pushNamed(CustomerDetailsPage.routeName, extra: customer),
+              child: Row(
                 children: [
                   Expanded(
                     child: Text(
@@ -39,9 +39,9 @@ class CustomersListCard extends ConsumerWidget {
                   ),
                 ],
               ),
-              const CustomerCardOptions(),
-            ],
-          ),
+            ),
+            const CustomerCardOptions(),
+          ],
         ),
       ),
     );

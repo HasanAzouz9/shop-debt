@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_debts/config/const/app_constants.dart';
+import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 
 import '../molecules/invoices_item_search_bar.dart';
 import '../organisms/invoices_list.dart';
@@ -14,13 +15,17 @@ class InvoicesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(AppConstants.invoicesLabel),
-          centerTitle: true,
+          forceMaterialTransparency: true,
         ),
-        body: const Column(
-          children: [
-            InvoicesItemSearchBar(),
-            Expanded(child: InvoicesList()),
-          ],
+        body: Padding(
+          padding: context.padding16,
+          child: const Column(
+            spacing: 16,
+            children: [
+              InvoicesItemSearchBar(),
+              Expanded(child: InvoicesList()),
+            ],
+          ),
         ),
       ),
     );
