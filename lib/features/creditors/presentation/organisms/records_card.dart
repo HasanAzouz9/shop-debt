@@ -18,9 +18,9 @@ class RecordsCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final totalCredit = ref.watch(GetCreditorsTransactionsTotalController.provider);
     final totalDebts = ref.watch(GetTransactionsTotalController.provider);
-    return Padding(
+    return Container(
       padding: context.padding16,
-
+      decoration: const BoxDecoration().copyWith(color: context.colorScheme.onSecondary, borderRadius: context.radius8),
       child: DefaultTextStyle(
         style: context.textTheme.titleMedium!,
         child: Column(

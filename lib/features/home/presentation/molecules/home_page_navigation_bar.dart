@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shop_debts/features/common/presentation/atoms/app_icon_button.dart';
 
 import '../../../../core/extensions/app_dimensions.extension.dart';
 import '../../../../core/extensions/context.extensions.dart';
@@ -48,32 +49,27 @@ class CustomShellNavigationBar extends StatelessWidget {
     }) {
       final isSelected = navigationShell.currentIndex == index;
 
-      return IconButton(
-        onPressed: () => navigationShell.goBranch(
+      return AppIconButton(
+        onTap: () => navigationShell.goBranch(
           index,
           // initialLocation: index == navigationShell.currentIndex,
           initialLocation: true,
         ),
-        icon: Icon(
-          icon,
-          color: isSelected ? context.colorScheme.primary : context.colorScheme.outline,
-          size: isSelected ? 32 : 28,
-        ),
+        icon: icon,
+        iconColor: isSelected ? context.colorScheme.primary : context.colorScheme.outline,
+        iconSize: 28,
       );
     }
 
-    return Container(
-      padding: context.padding8,
-
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            navItem(icon: Icons.people, index: 0),
-            navItem(icon: Icons.payment, index: 1),
-            navItem(icon: Icons.request_quote_outlined, index: 2),
-          ],
-        ),
+    return Padding(
+      padding: context.paddingBottom16,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          navItem(icon: Icons.people, index: 0),
+          navItem(icon: Icons.payment, index: 1),
+          navItem(icon: Icons.request_quote_outlined, index: 2),
+        ],
       ),
     );
   }

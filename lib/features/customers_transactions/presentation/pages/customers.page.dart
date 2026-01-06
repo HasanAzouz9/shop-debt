@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shop_debts/config/const/app_constants.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
-import 'package:shop_debts/core/extensions/context.extensions.dart';
 import 'package:shop_debts/features/common/presentation/atoms/app_icon_button.dart';
 import '../organisms/customer_form_dialog.dart';
 import '../organisms/customers_list.dart';
@@ -18,7 +17,7 @@ class CustomersPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppConstants.customersLabel, style: context.textTheme.headlineLarge),
+          title: const Text(AppConstants.customersLabel),
           centerTitle: true,
           forceMaterialTransparency: true,
           bottom: PreferredSize(

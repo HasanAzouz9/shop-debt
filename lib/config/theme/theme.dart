@@ -352,11 +352,14 @@ class MaterialTheme {
       margin: const EdgeInsets.all(0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)),
     ),
-
+    appBarTheme: const AppBarThemeData().copyWith(
+      titleTextStyle: textTheme.headlineMedium!.copyWith(color: colorScheme.onSurface),
+    ),
     dialogTheme: const DialogThemeData().copyWith(
       shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)),
       constraints: BoxConstraints.fromViewConstraints(const ViewConstraints(minWidth: double.infinity)),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(backgroundColor: Colors.transparent),
     bottomSheetTheme: const BottomSheetThemeData().copyWith(shape: const BeveledRectangleBorder()),
     inputDecorationTheme: const InputDecorationTheme().copyWith(
       fillColor: colorScheme.onPrimary,

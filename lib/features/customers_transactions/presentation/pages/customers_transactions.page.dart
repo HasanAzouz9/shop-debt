@@ -14,7 +14,7 @@ class CustomersTransactionsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(AppConstants.transactionsLabel),
         centerTitle: true,
-        forceMaterialTransparency: true,
+        // forceMaterialTransparency: true,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(4.h),
           child: const CustomersTransactionsOptions(),
