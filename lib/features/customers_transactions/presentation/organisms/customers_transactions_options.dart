@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/features/customers_transactions/application/get_all_transaction.controller.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/add_customer_transaction.page.dart';
@@ -22,10 +23,7 @@ class CustomersTransactionsOptions extends ConsumerWidget {
           if (customerId == null)
             AppIconButton(
               icon: Icons.add,
-              onTap: () => showDialog(
-                context: context,
-                builder: (context) => const AddCustomerTransactionPage(),
-              ),
+              onTap: () => context.pushNamed(AddCustomerTransactionPage.routeName),
             ),
           AppIconButton(
             icon: Icons.filter_alt_outlined,

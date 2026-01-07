@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shop_debts/features/common/presentation/atoms/app_icon_button.dart';
+import 'package:shop_debts/features/common/presentation/atoms/app_text_button.dart';
 
 import '../../../../core/extensions/app_dimensions.extension.dart';
 import '../../../../core/extensions/context.extensions.dart';
@@ -44,31 +44,31 @@ class CustomShellNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget navItem({
-      required IconData icon,
+      required String label,
       required int index,
     }) {
       final isSelected = navigationShell.currentIndex == index;
 
-      return AppIconButton(
+      return AppTextButton(
         onTap: () => navigationShell.goBranch(
           index,
           // initialLocation: index == navigationShell.currentIndex,
           initialLocation: true,
         ),
-        icon: icon,
-        iconColor: isSelected ? context.colorScheme.primary : context.colorScheme.outline,
-        iconSize: 28,
+        label: label,
+        labelColor: isSelected ? context.colorScheme.onPrimaryContainer : context.colorScheme.outline,
       );
     }
 
-    return Padding(
-      padding: context.paddingBottom16,
+    return Container(
+      padding: context.padding16,
+      color: context.colorScheme.primaryContainer,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          navItem(icon: Icons.people, index: 0),
-          navItem(icon: Icons.payment, index: 1),
-          navItem(icon: Icons.request_quote_outlined, index: 2),
+          navItem(label: 'الزبائن', index: 0),
+          navItem(label: 'المعاملات', index: 1),
+          navItem(label: 'السجل', index: 2),
         ],
       ),
     );

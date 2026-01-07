@@ -5,6 +5,7 @@ import 'package:riverpod/riverpod.dart';
 import 'package:shop_debts/features/creditors/presentation/pages/records.page.dart';
 import 'package:shop_debts/features/creditors/presentation/pages/invoices.page.dart';
 import 'package:shop_debts/features/customers_transactions/domain/models/customer.entity.dart';
+import 'package:shop_debts/features/customers_transactions/presentation/pages/add_customer_transaction.page.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customer_details.page.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customers.page.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customers_transactions.page.dart';
@@ -59,6 +60,13 @@ final routeProvider = Provider<GoRouter>((ref) {
                 path: CustomersTransactionsPage.routePath,
                 name: CustomersTransactionsPage.routeName,
                 builder: (context, state) => const CustomersTransactionsPage(),
+                routes: [
+                  GoRoute(
+                    path: AddCustomerTransactionPage.routePath,
+                    name: AddCustomerTransactionPage.routeName,
+                    builder: (context, state) => const AddCustomerTransactionPage(),
+                  ),
+                ],
               ),
             ],
           ),

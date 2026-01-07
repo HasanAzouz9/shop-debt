@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_debts/features/common/presentation/atoms/note_card/note_card.dart';
+import 'package:shop_debts/features/common/presentation/atoms/note_card.dart';
 import 'package:shop_debts/features/common/presentation/molecules/remove_note_background.dart';
 import 'package:shop_debts/features/customers_transactions/application/get_customer_notes.controller.dart';
 import 'package:shop_debts/features/customers_transactions/application/remove_note.controller.dart';

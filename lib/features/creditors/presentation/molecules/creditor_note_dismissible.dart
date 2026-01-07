@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/features/common/presentation/molecules/remove_note_background.dart';
 
-import '../../../common/presentation/atoms/note_card/note_card.dart';
+import '../../../common/presentation/atoms/note_card.dart';
 import '../../application/get_creditors_notes.controller.dart';
 import '../../application/remove_creditor_note.controller.dart';
 import '../templates/creditor_notes.dart';

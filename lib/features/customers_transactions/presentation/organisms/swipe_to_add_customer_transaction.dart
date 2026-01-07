@@ -7,7 +7,6 @@ import 'package:shop_debts/features/customers_transactions/application/adding_tr
 import 'package:shop_debts/features/customers_transactions/application/customer.controller.dart';
 import 'package:shop_debts/features/customers_transactions/application/customer_provider.dart';
 import 'package:shop_debts/features/customers_transactions/application/get_all_transaction.controller.dart';
-import 'package:shop_debts/features/customers_transactions/presentation/molecules/add_customer_transaction_note_text_filed.dart';
 
 import '../../../../core/enum/transaction_type.enum.dart';
 import '../molecules/swipe_to_add_customer_transaction_background.dart';
@@ -69,7 +68,6 @@ class SwipeToAddCustomerTransaction extends ConsumerWidget {
                   ref.invalidate(customerProvider);
                   ref.invalidate(CustomerController.provider);
                   ref.invalidate(calcProvider);
-                  addingTransactionNoteForm.currentState!.reset();
                   FocusManager.instance.primaryFocus!.unfocus();
                 }
               },

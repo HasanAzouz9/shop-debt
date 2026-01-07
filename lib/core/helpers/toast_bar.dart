@@ -11,7 +11,7 @@ class ToastBar {
     required BuildContext context,
     required String message,
     required ToastType toastType,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 2),
   }) {
     final overlay = Overlay.of(context);
     late OverlayEntry entry;

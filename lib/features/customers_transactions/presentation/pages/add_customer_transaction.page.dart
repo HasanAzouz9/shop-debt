@@ -12,32 +12,31 @@ import '../molecules/add_customer_transaction_note_text_filed.dart';
 
 class AddCustomerTransactionPage extends ConsumerWidget {
   const AddCustomerTransactionPage({super.key});
-
+  static const routeName = 'add_customer_transaction';
+  static const routePath = '/add_customer_transaction';
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final addingTransactionController = ref.read(AddingTransactionStateController.provider.notifier);
-    return Dialog.fullscreen(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: const Text(AppConstants.addTransactionLabel),
-          titleTextStyle: context.textTheme.headlineMedium,
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding: context.padding16,
-          child: Column(
-            spacing: 16,
-            children: [
-              SelectCustomerDropdown(
-                onSelect: (id) => ref.read(AddingTransactionStateController.provider.notifier).setCustomerId(id),
-              ),
-              const AddCustomerTransactionNoteTextFiled(),
-              const Spacer(),
-              CustomCalculator(onResultChanged: (value) => addingTransactionController.setAmount(value)),
-              const SwipeToAddCustomerTransaction(),
-            ],
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text(AppConstants.addTransactionLabel),
+        titleTextStyle: context.textTheme.headlineMedium,
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: context.padding16,
+        child: Column(
+          spacing: 16,
+          children: [
+            SelectCustomerDropdown(
+              onSelect: (id) => ref.read(AddingTransactionStateController.provider.notifier).setCustomerId(id),
+            ),
+            const AddCustomerTransactionNoteTextFiled(),
+            const Spacer(),
+            CustomCalculator(onResultChanged: (value) => addingTransactionController.setAmount(value)),
+            const SwipeToAddCustomerTransaction(),
+          ],
         ),
       ),
     );

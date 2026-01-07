@@ -4,7 +4,7 @@ import 'package:shop_debts/config/const/app_constants.dart';
 import 'package:shop_debts/core/form_validation.mixin.dart';
 import 'package:shop_debts/features/customers_transactions/application/adding_transaction_state.controller.dart';
 
-GlobalKey<FormState> addingTransactionNoteForm = GlobalKey<FormState>();
+import '../../application/add_transaction.controller.dart';
 
 class AddCustomerTransactionNoteTextFiled extends ConsumerStatefulWidget {
   const AddCustomerTransactionNoteTextFiled({super.key});
@@ -34,15 +34,18 @@ class _AddCustomerTransactionNoteTextFiledState extends ConsumerState<AddCustome
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<void>>(AddTransactionController.provider, (previous, next) {
+      if (next is AsyncData && previous is AsyncLoading) {
+        _textController.clear();
+        _focusNode.unfocus();
+      }
+    });
     final addingTransactionController = ref.read(AddingTransactionStateController.provider.notifier);
-    return Form(
-      key: addingTransactionNoteForm,
-      child: TextFormField(
-        controller: _textController,
-        focusNode: _focusNode,
-        decoration: const InputDecoration(hintText: AppConstants.noteLabel),
-        onChanged: (value) => addingTransactionController.setNote(value),
-      ),
+    return TextFormField(
+      controller: _textController,
+      focusNode: _focusNode,
+      decoration: const InputDecoration(hintText: AppConstants.noteLabel),
+      onChanged: (value) => addingTransactionController.setNote(value),
     );
   }
 }

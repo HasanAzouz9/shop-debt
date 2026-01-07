@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../../core/extensions/app_dimensions.extension.dart';
-import '../../../../../core/extensions/context.extensions.dart';
+import '../../../../core/extensions/app_dimensions.extension.dart';
+import '../../../../core/extensions/context.extensions.dart';
 
 class NoteCard extends StatelessWidget {
   final String note;
