@@ -60,7 +60,6 @@ class CustomersLocalRepositoryImplementation implements CustomersRepositoryInter
 
   @override
   Future<Result<List<String>>> getNotes({required String customerId}) {
-    // TODO: implement getNotes
     throw UnimplementedError();
   }
 }

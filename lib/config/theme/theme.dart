@@ -364,6 +364,7 @@ class MaterialTheme {
     searchBarTheme: const SearchBarThemeData().copyWith(
       elevation: const WidgetStatePropertyAll(0),
       constraints: BoxConstraints.tight(const Size.fromHeight(50)),
+      backgroundColor: WidgetStatePropertyAll(colorScheme.tertiaryContainer),
       shape: const WidgetStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),

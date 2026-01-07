@@ -8,19 +8,19 @@ class GetCreditorsNotesController extends StateNotifier<AsyncValue<List<String>>
   static final provider = StateNotifierProvider.autoDispose
       .family<GetCreditorsNotesController, AsyncValue<List<String>>, String>(
         (ref, creditorId) => GetCreditorsNotesController(
-          interface: ref.watch(CreditorsRepositoryImplementation.provider),
+          repository: ref.watch(CreditorsRepositoryImplementation.provider),
           creditorId: creditorId,
         ),
       );
-  GetCreditorsNotesController({required this.interface, required this.creditorId}) : super(const AsyncLoading()) {
+  GetCreditorsNotesController({required this.repository, required this.creditorId}) : super(const AsyncLoading()) {
     getAll();
   }
-  final CreditorsRepositoryInterface interface;
+  final CreditorsRepositoryInterface repository;
   final String creditorId;
 
   getAll() async {
     state = const AsyncLoading();
-    final result = await interface.getNotes(creditorId: creditorId);
+    final result = await repository.getNotes(creditorId: creditorId);
     if (!mounted) return;
     result.when(
       success: (data) => state = AsyncData(data),

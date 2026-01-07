@@ -51,30 +51,24 @@ class _AddCreditorNoteFieldState extends ConsumerState<AddCreditorNoteField> {
       );
     });
 
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: _noteController,
-            focusNode: _noteFocus,
-            maxLines: 3,
-            decoration: const InputDecoration().copyWith(
-              hintText: 'أضف ملاحظة',
-              suffixIcon: addingState.when(
-                data: (data) => IconButton(
-                  onPressed: () => addingController.add(note: _noteController.text),
-                  icon: const Icon(Icons.add),
-                ),
-                error: (error, stackTrace) => IconButton(
-                  onPressed: () => addingController.add(note: _noteController.text),
-                  icon: const Icon(Icons.sync),
-                ),
-                loading: () => const Icon(Icons.hourglass_top),
-              ),
-            ),
+    return TextFormField(
+      controller: _noteController,
+      focusNode: _noteFocus,
+      maxLines: 3,
+      decoration: const InputDecoration().copyWith(
+        hintText: 'أضف ملاحظة',
+        suffixIcon: addingState.when(
+          data: (data) => IconButton(
+            onPressed: () => addingController.add(note: _noteController.text),
+            icon: const Icon(Icons.add),
           ),
+          error: (error, stackTrace) => IconButton(
+            onPressed: () => addingController.add(note: _noteController.text),
+            icon: const Icon(Icons.sync),
+          ),
+          loading: () => const Icon(Icons.hourglass_top),
         ),
-      ],
+      ),
     );
   }
 }

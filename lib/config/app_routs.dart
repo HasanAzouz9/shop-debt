@@ -6,7 +6,6 @@ import 'package:shop_debts/features/creditors/presentation/pages/records.page.da
 import 'package:shop_debts/features/creditors/presentation/pages/invoices.page.dart';
 import 'package:shop_debts/features/customers_transactions/domain/models/customer.entity.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customer_details.page.dart';
-import 'package:shop_debts/features/customers_transactions/presentation/pages/customer_ledger.page.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customers.page.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customers_transactions.page.dart';
 import 'package:shop_debts/features/home/presentation/molecules/home_page_navigation_bar.dart';

@@ -24,9 +24,7 @@ class CustomersTransactionsOptions extends ConsumerWidget {
               icon: Icons.add,
               onTap: () => showDialog(
                 context: context,
-                builder: (context) => const Dialog.fullscreen(
-                  child: AddCustomerTransactionPage(transactionType: .debt),
-                ),
+                builder: (context) => const AddCustomerTransactionPage(),
               ),
             ),
           AppIconButton(

@@ -11,17 +11,19 @@ class CustomersTransactionsPage extends StatelessWidget {
   static const routePath = '/';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.transactionsLabel),
-        centerTitle: true,
-        forceMaterialTransparency: true,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(5.h),
-          child: const CustomersTransactionsOptions(),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(AppConstants.transactionsLabel),
+          centerTitle: true,
+          forceMaterialTransparency: true,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(5.h),
+            child: const CustomersTransactionsOptions(),
+          ),
         ),
+        body: const CustomersTransactionsList(),
       ),
-      body: const CustomersTransactionsList(),
     );
   }
 }

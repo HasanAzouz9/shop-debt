@@ -19,6 +19,7 @@ class AddCreditorNoteController extends StateNotifier<AsyncValue<void>> {
     state = const AsyncLoading();
 
     final result = await interface.addNote(creditorId: creditorId, newNote: note);
+    if (!mounted) return;
     result.when(
       success: (data) => state = const AsyncData(null),
       failure: (failure) => state = AsyncError(AppException.handle(failure), StackTrace.current),

@@ -4,21 +4,31 @@ import 'package:shop_debts/features/customers_transactions/domain/repositories/c
 import 'package:shop_debts/features/customers_transactions/infrastructure/repositories/customers_remote.repository.implementation.dart';
 
 class RemoveNoteController extends StateNotifier<AsyncValue<void>> {
-  static final provider = StateNotifierProvider.autoDispose<RemoveNoteController, AsyncValue<void>>(
-    (ref) => RemoveNoteController(repository: ref.watch(CustomersRemoteRepositoryImplementation.provider)),
+  static final provider = StateNotifierProvider.autoDispose.family<RemoveNoteController, AsyncValue<void>, String>(
+    (ref, customerId) => RemoveNoteController(
+      repository: ref.watch(CustomersRemoteRepositoryImplementation.provider),
+      customerId: customerId,
+    ),
   );
-  RemoveNoteController({required this.repository}) : super(const AsyncData(null));
+  RemoveNoteController({required this.repository, required this.customerId}) : super(const AsyncData(null));
   final CustomersRepositoryInterface repository;
+  final String customerId;
 
-  removeNote({required String customerId, required String note}) async {
+  Future<bool> removeNote({required String note}) async {
     state = const AsyncLoading();
-
     final result = await repository.removeNote(customerId: customerId, note: note);
-    if (mounted) return;
-    result.when(
-      //TODO fix with dimissable
-      success: (_) => state = const AsyncData(null),
-      failure: (failure) => state = AsyncError(AppException.handle(failure), StackTrace.current),
+
+    if (!mounted) return false;
+
+    return result.when(
+      success: (_) {
+        state = const AsyncData(null);
+        return true;
+      },
+      failure: (failure) {
+        state = AsyncError(AppException.handle(failure), StackTrace.current);
+        return false;
+      },
     );
   }
 }

@@ -70,9 +70,8 @@ class CreditorsRemoteDatasource {
   Future<List<String>> getNotes({required String creditorId}) async {
     final response = await client.from('creditors').select('notes').eq('id', creditorId).single();
     final notes = response['notes'];
-    if (notes == null) {
-      return [];
-    }
+    if (notes == null) return [];
+
     return List<String>.from(notes);
   }
 }

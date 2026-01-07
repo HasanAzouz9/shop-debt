@@ -20,16 +20,18 @@ class CustomerNotesList extends ConsumerWidget {
     final notes = ref.watch(GetCustomerNotesController.provider(customerId));
 
     return notes.when(
-      data: (data) => ListView.builder(
-        itemCount: data.length,
-        padding: EdgeInsets.zero,
-        itemBuilder: (context, i) {
-          return ProviderScope(
-            overrides: [noteProvider.overrideWithValue(data[i])],
-            child: const CustomerNoteCard(),
-          );
-        },
-      ),
+      data: (data) => data.isEmpty
+          ? const Center(child: Text(AppConstants.emptyListMessage))
+          : ListView.builder(
+              itemCount: data.length,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, i) {
+                return ProviderScope(
+                  overrides: [noteProvider.overrideWithValue(data[i])],
+                  child: const CustomerNoteCard(),
+                );
+              },
+            ),
       error: (error, stackTrace) => ErrorMessageWithAction(
         errorMessage: error.getErrorMessage,
         action: () => ref.invalidate(customerProvider(customerId)),

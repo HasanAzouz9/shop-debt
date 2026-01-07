@@ -17,9 +17,7 @@ class AddTransactionController extends StateNotifier<AsyncValue<void>> {
 
   void add({required TransactionEntity transaction, required BuildContext context, VoidCallback? then}) async {
     state = const AsyncLoading();
-    final result = await repository.add(
-      transaction: transaction,
-    );
+    final result = await repository.add(transaction: transaction);
     if (!mounted) return;
     result.when(
       success: (_) {

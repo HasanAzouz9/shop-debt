@@ -8,22 +8,28 @@ class RemoveCreditorNoteController extends StateNotifier<AsyncValue<void>> {
   static final provider = StateNotifierProvider.autoDispose
       .family<RemoveCreditorNoteController, AsyncValue<void>, String>(
         (ref, creditorId) => RemoveCreditorNoteController(
-          interface: ref.watch(CreditorsRepositoryImplementation.provider),
+          repository: ref.watch(CreditorsRepositoryImplementation.provider),
           creditorId: creditorId,
         ),
       );
-  RemoveCreditorNoteController({required this.interface, required this.creditorId}) : super(const AsyncLoading());
-  final CreditorsRepositoryInterface interface;
+  RemoveCreditorNoteController({required this.repository, required this.creditorId}) : super(const AsyncData(null));
+  final CreditorsRepositoryInterface repository;
   final String creditorId;
 
-  remove({required String note}) async {
+  Future<bool> remove({required String note}) async {
     state = const AsyncLoading();
 
-    final result = await interface.removeNote(creditorId: creditorId, note: note);
-    if (!mounted) return;
-    result.when(
-      success: (data) => state = const AsyncData(null),
-      failure: (failure) => state = AsyncError(AppException.handle(failure), StackTrace.current),
+    final result = await repository.removeNote(creditorId: creditorId, note: note);
+    if (!mounted) return false;
+    return result.when(
+      success: (data) {
+        state = const AsyncData(null);
+        return true;
+      },
+      failure: (failure) {
+        state = AsyncError(AppException.handle(failure), StackTrace.current);
+        return false;
+      },
     );
   }
 }

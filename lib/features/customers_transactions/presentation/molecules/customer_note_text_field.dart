@@ -5,6 +5,8 @@ import 'package:shop_debts/features/customers_transactions/application/add_custo
 import 'package:shop_debts/features/customers_transactions/application/get_customer_notes.controller.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customer_details.page.dart';
 
+import '../../../../core/extensions/context.extensions.dart';
+
 class CustomerNoteTextField extends ConsumerStatefulWidget {
   const CustomerNoteTextField({super.key});
 
@@ -33,33 +35,41 @@ class _CustomerNoteTextFieldState extends ConsumerState<CustomerNoteTextField> {
   @override
   Widget build(BuildContext context) {
     final customerId = ref.watch(CustomerDetailsPage.currentCustomerIdProvider);
-    final addNoteState = ref.watch(AddCustomerNoteController.provider);
-    //TODO make validation for empty note
+    final addNoteState = ref.watch(AddCustomerNoteController.provider(customerId));
+    final addNoteController = ref.watch(AddCustomerNoteController.provider(customerId).notifier);
+
+    // Use ref.listen to handle the success side-effects
+    ref.listen<AsyncValue<void>>(AddCustomerNoteController.provider(customerId), (previous, next) {
+      next.whenOrNull(
+        data: (_) {
+          // Only clear and refresh if the note was actually added successfully
+          ref.read(GetCustomerNotesController.provider(customerId).notifier).getNotes();
+          _noteController.clear();
+          _noteFocus.unfocus();
+        },
+        error: (error, _) {
+          context.showToast(message: error.toString(), type: .error);
+        },
+      );
+    });
+
     return TextField(
       controller: _noteController,
       focusNode: _noteFocus,
-      decoration: const InputDecoration().copyWith(
-        hint: const Text(AppConstants.addNoteLabel),
-        suffixIcon: IconButton(
-          onPressed: addNoteState.maybeWhen(
-            loading: () => null,
-
-            orElse: () => () {
-              if (_noteController.text.isNotEmpty) {
-                ref
-                    .read(AddCustomerNoteController.provider.notifier)
-                    .addNote(customerId: customerId, note: _noteController.text);
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Future.delayed(const Duration(milliseconds: 100), () {
-                    ref.read(GetCustomerNotesController.provider(customerId).notifier).getNotes();
-                    _noteController.clear();
-                    _noteFocus.unfocus();
-                  });
-                });
-              }
-            },
+      maxLines: 2,
+      decoration: InputDecoration(
+        // Removed .copyWith for cleaner syntax
+        hintText: AppConstants.addNoteLabel,
+        suffixIcon: addNoteState.when(
+          data: (data) => IconButton(
+            onPressed: () => addNoteController.addNote(note: _noteController.text),
+            icon: const Icon(Icons.add),
           ),
-          icon: const Icon(Icons.add),
+          error: (error, stackTrace) => IconButton(
+            onPressed: () => addNoteController.addNote(note: _noteController.text),
+            icon: const Icon(Icons.sync),
+          ),
+          loading: () => const Icon(Icons.hourglass_top),
         ),
       ),
     );

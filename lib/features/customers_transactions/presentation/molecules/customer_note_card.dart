@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_debts/core/extensions/context.extensions.dart';
-import 'package:shop_debts/core/extensions/object.extensions.dart';
 import 'package:shop_debts/features/common/presentation/atoms/note_card/note_card.dart';
+import 'package:shop_debts/features/common/presentation/molecules/remove_note_background.dart';
 import 'package:shop_debts/features/customers_transactions/application/get_customer_notes.controller.dart';
 import 'package:shop_debts/features/customers_transactions/application/remove_note.controller.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/pages/customer_details.page.dart';
@@ -16,35 +15,23 @@ class CustomerNoteCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final note = ref.watch(CustomerNotesList.noteProvider);
     final customerId = ref.watch(CustomerDetailsPage.currentCustomerIdProvider);
+    final state = ref.watch(RemoveNoteController.provider(customerId));
+    final removeNoteController = ref.read(RemoveNoteController.provider(customerId).notifier);
+    final notesController = ref.read(GetCustomerNotesController.provider(customerId).notifier);
 
     return Dismissible(
       key: ValueKey(note),
-      background: Container(color: context.colorScheme.error),
+      background: RemoveNoteBackground(isLoading: state.isLoading),
 
       confirmDismiss: (_) async {
-        final notifier = ref.read(RemoveNoteController.provider.notifier);
+        final success = await removeNoteController.removeNote(note: note);
 
-        await notifier.removeNote(
-          customerId: customerId,
-          note: note,
-        );
-
-        final state = ref.read(RemoveNoteController.provider);
-
-        if (state is AsyncData) {
-          ref.read(GetCustomerNotesController.provider(customerId).notifier).getNotes();
+        if (success) {
+          notesController.getNotes();
           return true;
-        }
-
-        if (state is AsyncError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.showToast(message: state.error.getErrorMessage, type: .error);
-          });
-
+        } else {
           return false;
         }
-
-        return false;
       },
 
       child: NoteCard(note: note),

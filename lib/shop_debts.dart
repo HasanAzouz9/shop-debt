@@ -28,7 +28,7 @@ class ShopDebts extends ConsumerWidget {
             Orientation orientation,
             ScreenType screenType,
           ) {
-            final lightThemeData = _buildTheme(context, false);
+            // final lightThemeData = _buildTheme(context, false);
 
             final darkThemeData = _buildTheme(context, true);
 
@@ -42,7 +42,7 @@ class ShopDebts extends ConsumerWidget {
               ],
               supportedLocales: const [Locale('ar', '')],
               locale: const Locale('ar', ''),
-              theme: lightThemeData,
+              theme: darkThemeData,
 
               darkTheme: darkThemeData,
 

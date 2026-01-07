@@ -57,7 +57,7 @@ class CustomersRemoteDatasource {
 
   Future<void> addNote({required String customerId, required String newNote}) async {
     await supabaseClient.rpc(
-      'append_customer_note',
+      'add_customer_note',
       params: {'customer_id_in': customerId, 'new_note_in': newNote},
     );
   }
@@ -74,13 +74,6 @@ class CustomersRemoteDatasource {
       },
     );
   }
-
-  // Future<List<String>> getCustomersNames() async {
-  //   final names = await supabaseClient.from('customers').select('name');
-  //   List<String> namesResponse = names.map((e) => e['name'] as String).toList();
-
-  //   return namesResponse;
-  // }
 
   Future<bool> nameExist({required String name}) async {
     final lowerCaseInputName = name.toLowerCase().trim();
