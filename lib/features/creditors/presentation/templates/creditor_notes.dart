@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_debts/config/const/app_constants.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/core/extensions/object.extensions.dart';
-import 'package:shop_debts/features/common/presentation/molecules/centered_loading_message.dart';
+import 'package:shop_debts/features/common/presentation/molecules/empty_cat_card.dart';
 import 'package:shop_debts/features/common/presentation/molecules/exception_card_with_refresh.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
 import 'package:shop_debts/features/creditors/application/get_creditors_notes.controller.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/creditor_card.dart';
 
@@ -27,7 +27,7 @@ class CreditorNotes extends ConsumerWidget {
           Expanded(
             child: notes.when(
               data: (data) => data.isEmpty
-                  ? const Text(AppConstants.emptyListMessage)
+                  ? const EmptyCatCard()
                   : ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (ctx, i) {
@@ -41,7 +41,7 @@ class CreditorNotes extends ConsumerWidget {
                 errorMessage: error.getErrorMessage,
                 action: () => ref.invalidate(GetCreditorsNotesController.provider(creditor.getId)),
               ),
-              loading: () => const CenteredLoadingMessage(),
+              loading: () => const LoadingCatCard(),
             ),
           ),
         ],

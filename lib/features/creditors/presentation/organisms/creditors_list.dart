@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/extensions/object.extensions.dart';
-import 'package:shop_debts/features/common/presentation/molecules/centered_loading_message.dart';
+import 'package:shop_debts/features/common/presentation/molecules/empty_cat_card.dart';
 import 'package:shop_debts/features/common/presentation/molecules/exception_card_with_refresh.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
 import 'package:shop_debts/features/creditors/application/get_all_creditors.controller.dart';
 import 'package:shop_debts/features/creditors/domain/models/creditor.entity.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/creditor_card.dart';
-
-import '../../../../config/const/app_constants.dart';
 
 class CreditorsList extends ConsumerWidget {
   const CreditorsList({super.key});
@@ -19,7 +18,7 @@ class CreditorsList extends ConsumerWidget {
       child: creditorsListState.when(
         data: (data) {
           return data.isEmpty
-              ? const Center(child: Text(AppConstants.emptyListMessage))
+              ? const Center(child: EmptyCatCard())
               : ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (ctx, i) {
@@ -36,7 +35,7 @@ class CreditorsList extends ConsumerWidget {
             action: () => ref.invalidate(GetAllCreditorsController.provider),
           ),
         ),
-        loading: () => const CenteredLoadingMessage(),
+        loading: () => const LoadingCatCard(),
       ),
     );
   }

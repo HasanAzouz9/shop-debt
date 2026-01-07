@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/core/extensions/context.extensions.dart';
 import 'package:shop_debts/core/extensions/object.extensions.dart';
-import 'package:shop_debts/features/common/presentation/molecules/centered_loading_message.dart';
 import 'package:shop_debts/features/common/presentation/molecules/convertible_amount_text.dart';
 import 'package:shop_debts/features/common/presentation/molecules/exception_card_with_refresh.dart';
-import 'package:shop_debts/features/common/presentation/molecules/list_footer.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
+import 'package:shop_debts/features/common/presentation/organisms/list_footer.dart';
 import 'package:shop_debts/features/creditors/application/get_all_creditors_transactions.controller.dart';
 import 'package:shop_debts/features/creditors/domain/models/creditor_transaction.entity.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/creditor_card.dart';
@@ -79,7 +79,7 @@ class _CreditorRecordsState extends ConsumerState<CreditorRecords> {
         ),
         Expanded(
           child: creditorTransactions.when(
-            initial: () => const CenteredLoadingMessage(),
+            initial: () => const LoadingCatCard(),
             error: (error) => Center(
               child: ErrorMessageWithAction(
                 errorMessage: error.getErrorMessage,
@@ -92,7 +92,7 @@ class _CreditorRecordsState extends ConsumerState<CreditorRecords> {
                 itemCount: creditorTransactions.length + 1,
                 itemBuilder: (ctx, i) {
                   if (i == creditorTransactions.length) {
-                    if (isLoading) return const CenteredLoadingMessage();
+                    if (isLoading) return const LoadingCatCard();
 
                     if (error != null) {
                       return Center(

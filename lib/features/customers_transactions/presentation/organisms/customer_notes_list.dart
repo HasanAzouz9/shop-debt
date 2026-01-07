@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_debts/features/common/presentation/molecules/empty_cat_card.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
 
-import '../../../../config/const/app_constants.dart';
 import '../../../../core/extensions/object.extensions.dart';
 import '../../../common/presentation/molecules/exception_card_with_refresh.dart';
 import '../../application/customer_provider.dart';
@@ -21,7 +22,7 @@ class CustomerNotesList extends ConsumerWidget {
 
     return notes.when(
       data: (data) => data.isEmpty
-          ? const Center(child: Text(AppConstants.emptyListMessage))
+          ? const EmptyCatCard()
           : ListView.builder(
               itemCount: data.length,
               padding: EdgeInsets.zero,
@@ -37,7 +38,7 @@ class CustomerNotesList extends ConsumerWidget {
         action: () => ref.invalidate(customerProvider(customerId)),
       ),
       loading: () => const Center(
-        child: Text(AppConstants.loadingMessage),
+        child: LoadingCatCard(),
       ),
     );
   }

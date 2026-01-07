@@ -38,11 +38,9 @@ class _CustomerNoteTextFieldState extends ConsumerState<CustomerNoteTextField> {
     final addNoteState = ref.watch(AddCustomerNoteController.provider(customerId));
     final addNoteController = ref.watch(AddCustomerNoteController.provider(customerId).notifier);
 
-    // Use ref.listen to handle the success side-effects
     ref.listen<AsyncValue<void>>(AddCustomerNoteController.provider(customerId), (previous, next) {
       next.whenOrNull(
         data: (_) {
-          // Only clear and refresh if the note was actually added successfully
           ref.read(GetCustomerNotesController.provider(customerId).notifier).getNotes();
           _noteController.clear();
           _noteFocus.unfocus();
@@ -58,7 +56,6 @@ class _CustomerNoteTextFieldState extends ConsumerState<CustomerNoteTextField> {
       focusNode: _noteFocus,
       maxLines: 2,
       decoration: InputDecoration(
-        // Removed .copyWith for cleaner syntax
         hintText: AppConstants.addNoteLabel,
         suffixIcon: addNoteState.when(
           data: (data) => IconButton(

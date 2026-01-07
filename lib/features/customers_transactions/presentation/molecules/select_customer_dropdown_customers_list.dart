@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop_debts/config/const/app_constants.dart';
+import 'package:shop_debts/config/const/assets_constants.dart';
 import 'package:shop_debts/core/extensions/app_dimensions.extension.dart';
 import 'package:shop_debts/core/extensions/context.extensions.dart';
 import 'package:shop_debts/core/extensions/double.extension.dart';
@@ -56,39 +56,41 @@ class _SelectCustomerDropdownCustomersListState extends ConsumerState<SelectCust
     return Expanded(
       child: customersAsync.when(
         data: (customersList) {
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: customersList.customers.length + (customersList.hasMore ? 1 : 0),
-            controller: _scrollController,
-            itemBuilder: (ctx, i) {
-              if (i == customersList.customers.length) {
-                return const Center(child: Text(AppConstants.loadingMessage));
-              }
-              return Padding(
-                padding: context.padding8,
-                child: InkWell(
-                  onTap: () {
-                    widget.onCustomerSelected(customersList.customers[i].name, customersList.customers[i].getId);
+          return customersList.customers.isEmpty
+              ? Image.asset(AssetsConstants.emptyCat)
+              : ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: customersList.customers.length + (customersList.hasMore ? 1 : 0),
+                  controller: _scrollController,
+                  itemBuilder: (ctx, i) {
+                    if (i == customersList.customers.length) {
+                      return Center(child: Image.asset(AssetsConstants.loadingCat));
+                    }
+                    return Padding(
+                      padding: context.padding8,
+                      child: InkWell(
+                        onTap: () {
+                          widget.onCustomerSelected(customersList.customers[i].name, customersList.customers[i].getId);
+                        },
+                        child: DefaultTextStyle(
+                          style: context.textTheme.titleMedium!,
+                          child: Row(
+                            children: [
+                              Expanded(child: Text(customersList.customers[i].name)),
+                              Text(customersList.customers[i].currentBalance.compact()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
                   },
-                  child: DefaultTextStyle(
-                    style: context.textTheme.titleMedium!,
-                    child: Row(
-                      children: [
-                        Expanded(child: Text(customersList.customers[i].name)),
-                        Text(customersList.customers[i].currentBalance.compact()),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
+                );
         },
         error: (error, stackTrace) => ErrorMessageWithAction(
           errorMessage: error.getErrorMessage,
           action: () => ref.invalidate(CustomerController.provider),
         ),
-        loading: () => const Center(child: Text(AppConstants.loadingMessage)),
+        loading: () => Center(child: Image.asset(AssetsConstants.loadingCat)),
       ),
     );
   }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
 import 'package:shop_debts/features/customers_transactions/presentation/molecules/un_named_customer_transaction_card.dart';
 
 import '../../../../core/exceptions_handler/custom_exception.dart';
 import '../../../../core/extensions/object.extensions.dart';
-import '../../../common/presentation/molecules/centered_loading_message.dart';
 import '../../../common/presentation/molecules/exception_card_with_refresh.dart';
-import '../../../common/presentation/molecules/list_footer.dart';
+import '../../../common/presentation/organisms/list_footer.dart';
 import '../../application/get_all_transaction.controller.dart';
 import '../../domain/models/transaction.entity.dart';
 import 'named_customer_transaction_card.dart';
@@ -43,7 +43,7 @@ class _CustomersTransactionsListState extends ConsumerState<CustomersTransaction
     final transactionsState = ref.watch(GetAllTransactionsController.provider(widget.customerId));
 
     return transactionsState.when(
-      initial: () => const CenteredLoadingMessage(),
+      initial: () => const LoadingCatCard(),
       error: (error) => _errorMessage(error),
       data: (transactions, hasMore, isLoading, error) {
         return ListView.builder(
@@ -51,7 +51,7 @@ class _CustomersTransactionsListState extends ConsumerState<CustomersTransaction
           itemCount: transactions.length + 1,
           itemBuilder: (ctx, i) {
             if (i == transactions.length) {
-              if (isLoading) return const CenteredLoadingMessage();
+              if (isLoading) return const LoadingCatCard();
               if (error != null) return _errorMessage(error);
               return ListFooter(hasMore: hasMore, isEmpty: transactions.isEmpty);
             }

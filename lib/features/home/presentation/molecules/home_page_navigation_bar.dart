@@ -17,15 +17,11 @@ class MainShellScreen extends ConsumerWidget {
     final exchangeState = ref.watch(ExchangeRateConverter.provider);
     final bool hasSetRate = exchangeState.hasSetRate;
 
-    // Logic: If rate isn't set, we force the SetExchangeRatePage
-    // and hide the Navigation Bar entirely.
     if (!hasSetRate) {
       return const Scaffold(
         body: SetExchangeRatePage(),
       );
     }
-
-    // If rate is set, show the Shell (Tabs) + Custom Navigation Bar
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: CustomShellNavigationBar(navigationShell: navigationShell),

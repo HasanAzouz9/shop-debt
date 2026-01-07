@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/extensions/object.extensions.dart';
 import 'package:shop_debts/features/common/presentation/molecules/centered_loading_message.dart';
+import 'package:shop_debts/features/common/presentation/molecules/empty_cat_card.dart';
 import 'package:shop_debts/features/common/presentation/molecules/exception_card_with_refresh.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
 import 'package:shop_debts/features/customers_transactions/application/customer.controller.dart';
 import 'package:shop_debts/features/customers_transactions/domain/models/customer.entity.dart';
 
@@ -54,24 +56,26 @@ class _CustomersListState extends ConsumerState<CustomersList> {
     final customersList = ref.watch(CustomerController.provider);
 
     return customersList.when(
-      data: (customerList) {
-        return ListView.builder(
-          controller: _scrollController,
-          itemCount: customerList.customers.length + (customerList.hasMore ? 1 : 0),
-          itemBuilder: (ctx, i) {
-            if (i == customerList.customers.length) return const CenteredLoadingMessage();
-            return ProviderScope(
-              overrides: [CustomersList.customerProvider.overrideWithValue(customerList.customers[i])],
-              child: const CustomersListCard(),
-            );
-          },
-        );
+      data: (customers) {
+        return customers.customers.isEmpty
+            ? const EmptyCatCard()
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: customers.customers.length + (customers.hasMore ? 1 : 0),
+                itemBuilder: (ctx, i) {
+                  if (i == customers.customers.length) return const CenteredLoadingMessage();
+                  return ProviderScope(
+                    overrides: [CustomersList.customerProvider.overrideWithValue(customers.customers[i])],
+                    child: const CustomersListCard(),
+                  );
+                },
+              );
       },
       error: (error, stackTrace) => ErrorMessageWithAction(
         errorMessage: error.getErrorMessage,
         action: () => ref.invalidate(CustomerController.provider),
       ),
-      loading: () => const CenteredLoadingMessage(),
+      loading: () => const LoadingCatCard(),
     );
   }
 }

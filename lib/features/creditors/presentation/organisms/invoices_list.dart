@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_debts/core/exceptions_handler/custom_exception.dart';
 import 'package:shop_debts/core/extensions/object.extensions.dart';
-import 'package:shop_debts/features/common/presentation/molecules/centered_loading_message.dart';
 import 'package:shop_debts/features/common/presentation/molecules/exception_card_with_refresh.dart';
-import 'package:shop_debts/features/common/presentation/molecules/list_footer.dart';
+import 'package:shop_debts/features/common/presentation/molecules/loading_cat_card.dart';
+import 'package:shop_debts/features/common/presentation/organisms/list_footer.dart';
 import 'package:shop_debts/features/creditors/application/get_all_invoices.controller.dart';
 import 'package:shop_debts/features/creditors/domain/models/invoice.entity.dart';
 import 'package:shop_debts/features/creditors/presentation/molecules/invoice_card.dart';
@@ -35,7 +35,7 @@ class _InvoicesListState extends ConsumerState<InvoicesList> {
   Widget build(BuildContext context) {
     final invoicesState = ref.watch(GetAllInvoicesController.provider);
     return invoicesState.when(
-      initial: () => const CenteredLoadingMessage(),
+      initial: () => const LoadingCatCard(),
       error: (error) => _errorMessage(error),
       data: (invoices, hasMore, isLoading, error) {
         return ListView.builder(
@@ -43,7 +43,7 @@ class _InvoicesListState extends ConsumerState<InvoicesList> {
           itemCount: invoices.length + 1,
           itemBuilder: (ctx, i) {
             if (i == invoices.length) {
-              if (isLoading) return const CenteredLoadingMessage();
+              if (isLoading) return const LoadingCatCard();
               if (error != null) return Center(child: _errorMessage(error));
               return ListFooter(hasMore: hasMore, isEmpty: invoices.isEmpty);
             }

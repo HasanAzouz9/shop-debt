@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_debts/features/common/presentation/molecules/empty_cat_card.dart';
 
 import '../../../../config/const/app_constants.dart';
 import '../../../../core/extensions/context.extensions.dart';
@@ -20,10 +21,12 @@ class ListFooter extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Text(
-          isEmpty ? AppConstants.emptyListMessage : AppConstants.listEndMessage,
-          style: context.textTheme.bodyMedium,
-        ),
+        child: isEmpty
+            ? const EmptyCatCard()
+            : Text(
+                AppConstants.listEndMessage,
+                style: context.textTheme.bodyMedium,
+              ),
       ),
     );
   }
